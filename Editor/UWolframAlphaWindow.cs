@@ -14,7 +14,7 @@ namespace UWolframAlpha
 		const string k_editorprefskey_appid = "UWolframAlphaWindow.appid";
 		const string k_editorprefskey_input = "UWolframAlphaWindow.input_value";
 		Color _color1 = new Color{ r=0.6f , g=0.6f , b=0.6f , a=1 };
-		Label OUTPUT;
+		TextField OUTPUT;
 
 		public void OnEnable ()
 		{
@@ -41,7 +41,7 @@ namespace UWolframAlpha
 					var BUTTON = new Button(
 						async () => {
 							Debug.Log($"UWolframAlpha.Query( \"{INPUT.value}\" )");
-							OUTPUT.text = await UWolframAlpha.Query( INPUT.value );
+							OUTPUT.value = await UWolframAlpha.Query( INPUT.value );
 							OUTPUT.MarkDirtyRepaint();
 						}
 					);
@@ -62,7 +62,9 @@ namespace UWolframAlpha
 					style.flexDirection = FlexDirection.Column;
 					style.flexGrow = 1f;
 
-					OUTPUT = new Label("<results will appear here>");
+					OUTPUT = new TextField();
+					OUTPUT.value = "<results will appear here>";
+					OUTPUT.isReadOnly = true;
 					SCROLLVIEW.Add( OUTPUT );
 				}
 				rootVisualElement.Add( SCROLLVIEW );
