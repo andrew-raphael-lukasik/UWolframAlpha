@@ -10,10 +10,10 @@ namespace UWolframAlpha.Serialization
 		[XmlAttribute("success")] public bool success;
 		[XmlAttribute("error")] public bool error;
 		[XmlAttribute("numpods")] public int numpods;
-		[XmlAttribute("timedout")] public float timedout;
+		[XmlAttribute("timedout")] public string timedout;
 		[XmlAttribute("timing")] public float timing;
-		[XmlElement("pod")] Pod[] pod_array;
-		[XmlElement("assumptions")] Assumptions assumptions;
+		[XmlElement("pod")] public Pod[] pod_array;
+		[XmlElement("assumptions")] public Assumptions assumptions;
 		public override string ToString () => JsonUtility.ToJson( this );
 	}
 
@@ -27,10 +27,10 @@ namespace UWolframAlpha.Serialization
 		[XmlAttribute("numsubpods")] public int numsubpods;
 		[XmlAttribute("primary")] public bool primary;
 
-		[XmlElement("subpod")] SubPod[] subpod_array;
-		[XmlElement("expressiontypes")] ExpressionTypes expressiontypes;
-		[XmlElement("states")] States states;
-		[XmlElement("infos")] Infos infos;
+		[XmlElement("subpod")] public SubPod[] subpod_array;
+		[XmlElement("expressiontypes")] public ExpressionTypes expressiontypes;
+		[XmlElement("states")] public States states;
+		[XmlElement("infos")] public Infos infos;
 
 		public override string ToString () => JsonUtility.ToJson( this );
 	}
