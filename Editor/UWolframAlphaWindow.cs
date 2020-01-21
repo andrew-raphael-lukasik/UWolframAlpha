@@ -1,3 +1,5 @@
+using System.Threading.Tasks;
+
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -9,17 +11,16 @@ namespace UWolframAlpha
 {
 	public class UWolframAlphaWindow : EditorWindow
 	{
-
-		const string k_defaultAppId = "TE2UAQ-R25Q5U8VTA";
 		const string k_editorprefskey_appid = "UWolframAlphaWindow.appid";
 		const string k_editorprefskey_input = "UWolframAlphaWindow.input_value";
 		Color _color1 = new Color{ r=0.6f , g=0.6f , b=0.6f , a=1 };
-		VisualElement OUTPUT;
+		Label OUTPUT;
 
 		public void OnEnable ()
 		{
 			if( OUTPUT==null )
 			{
+
 				var BAR = new VisualElement();
 				{
 					var style = BAR.style;
@@ -27,15 +28,23 @@ namespace UWolframAlpha
 					style.flexDirection = FlexDirection.Row;
 					style.minHeight = 30;
 
+
 					var INPUT = new TextField();
 					INPUT.style.flexGrow = 1f;
 					{
-						INPUT.value = EditorPrefs.GetString( k_editorprefskey_input , "What is the answer to the ultimate question of life, the universe, and everything" );
+						INPUT.value = EditorPrefs.GetString( k_editorprefskey_input , "Answer to the Ultimate Question of Life, the Universe, and Everything" );
 						INPUT.RegisterValueChangedCallback( (e) => EditorPrefs.SetString(k_editorprefskey_input,e.newValue) );
 					}
 					BAR.Add( INPUT );
 
-					var BUTTON = new Button( () => Debug.Log("Button clicked!") );
+
+					var BUTTON = new Button(
+						async () => {
+							Debug.Log($"UWolframAlpha.Query( \"{INPUT.value}\" )");
+							OUTPUT.text = await UWolframAlpha.Query( INPUT.value );
+							OUTPUT.MarkDirtyRepaint();
+						}
+					);
 					BUTTON.style.flexGrow = 0.5f;
 					{
 						BUTTON.text = "=";
@@ -43,6 +52,7 @@ namespace UWolframAlpha
 					BAR.Add( BUTTON );
 				}
 				rootVisualElement.Add( BAR );
+
 
 				var SCROLLVIEW = new ScrollView();
 				{
@@ -57,14 +67,17 @@ namespace UWolframAlpha
 				}
 				rootVisualElement.Add( SCROLLVIEW );
 
+
 				var APPIP = new TextField( 100 , false , true , '#' );
 				{
 					var style = APPIP.style;
 					StyleMargin( style );
 
+					APPIP.value = EditorPrefs.GetString( k_editorprefskey_appid , string.Empty );
 					APPIP.RegisterValueChangedCallback( (e) => EditorPrefs.SetString(k_editorprefskey_appid,e.newValue) );
 				}
 				rootVisualElement.Add( APPIP );
+
 			}
 		}
 
