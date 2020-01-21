@@ -10,4 +10,6 @@ string response = UWolframAlpha.Query( query , appid );
 ```
 
 TODO:
-- UWolframAlpha.Query returning fully deserialized data
+- more deserialized data types (images etc)
+
+![(preview image)](https://i.imgur.com/AyxnIFZ.jpg)
