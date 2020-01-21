@@ -1,15 +1,11 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Xml;
+﻿using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Networking;
-using UnityEngine.Profiling;
 
-using QueryResult = UWolframAlpha.Serialization.QueryResult;
+using QueryResult = UWolframAlpha.Data.QueryResult;
 
 namespace UWolframAlpha
 {

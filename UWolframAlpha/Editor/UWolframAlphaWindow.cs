@@ -5,16 +5,15 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 
-using UWolframAlpha.Serialization;
-
-namespace UWolframAlpha
+namespace UWolframAlpha.Editor
 {
 	public class UWolframAlphaWindow : EditorWindow
 	{
 		const string k_editorprefskey_appid = "UWolframAlphaWindow.appid";
 		const string k_editorprefskey_input = "UWolframAlphaWindow.input_value";
 		Color _color1 = new Color{ r=0.6f , g=0.6f , b=0.6f , a=1 };
-		TextField OUTPUT;
+		VisualElement OUTPUT;
+		TextField INPUT;
 
 		public void OnEnable ()
 		{
@@ -29,23 +28,20 @@ namespace UWolframAlpha
 					style.minHeight = 30;
 
 
-					var INPUT = new TextField();
+					INPUT = new TextField();
 					INPUT.style.flexGrow = 1f;
 					{
+						INPUT.isDelayed = true;
 						INPUT.value = EditorPrefs.GetString( k_editorprefskey_input , "Answer to the Ultimate Question of Life, the Universe, and Everything" );
-						INPUT.RegisterValueChangedCallback( (e) => EditorPrefs.SetString(k_editorprefskey_input,e.newValue) );
+						INPUT.RegisterValueChangedCallback( (e) => {
+							EditorPrefs.SetString( k_editorprefskey_input , e.newValue );
+							OnButtonDown();
+						});
 					}
 					BAR.Add( INPUT );
 
 
-					var BUTTON = new Button(
-						async () => {
-							Debug.Log($"UWolframAlpha.Query( \"{INPUT.value}\" )");
-							var queryResult = await UWolframAlpha.Query( INPUT.value );
-							OUTPUT.value = JsonUtility.ToJson(queryResult,true);
-							OUTPUT.MarkDirtyRepaint();
-						}
-					);
+					var BUTTON = new Button( OnButtonDown );
 					BUTTON.style.flexGrow = 0.5f;
 					{
 						BUTTON.text = "=";
@@ -63,9 +59,7 @@ namespace UWolframAlpha
 					style.flexDirection = FlexDirection.Column;
 					style.flexGrow = 1f;
 
-					OUTPUT = new TextField();
-					OUTPUT.value = "<results will appear here>";
-					OUTPUT.isReadOnly = true;
+					OUTPUT = new VisualElement();
 					SCROLLVIEW.Add( OUTPUT );
 				}
 				rootVisualElement.Add( SCROLLVIEW );
@@ -75,13 +69,27 @@ namespace UWolframAlpha
 				{
 					var style = APPIP.style;
 					StyleMargin( style );
-
+					
+					APPIP.label = "appid:";
 					APPIP.value = EditorPrefs.GetString( k_editorprefskey_appid , string.Empty );
 					APPIP.RegisterValueChangedCallback( (e) => EditorPrefs.SetString(k_editorprefskey_appid,e.newValue) );
 				}
 				rootVisualElement.Add( APPIP );
 
 			}
+		}
+
+		async void OnButtonDown ()
+		{
+			Debug.Log($"UWolframAlpha.Query( \"{INPUT.value}\" )");
+			OUTPUT.SetEnabled( false );
+
+			var queryResult = await UWolframAlpha.Query( INPUT.value );
+			
+			OUTPUT.Clear();
+			OUTPUT.SetEnabled( true );
+			OUTPUT.Add( queryResult.CreateVisualElement() );
+			OUTPUT.MarkDirtyRepaint();
 		}
 
 		[MenuItem("Tools/UWolframAlpha")]
