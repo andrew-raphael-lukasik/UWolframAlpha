@@ -1,11 +1,15 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using System.Xml;
+using System.Xml.Serialization;
 
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Networking;
 using UnityEngine.Profiling;
+
+using QueryResult = UWolframAlpha.Serialization.QueryResult;
 
 namespace UWolframAlpha
 {
@@ -14,8 +18,9 @@ namespace UWolframAlpha
 
 		const string k_default_appid = "TE2UAQ-R25Q5U8VTA";
 
-        /// <summary> Wolfram Alpha query. </summary>
-        public static async Task<string> Query ( string query , string appid = k_default_appid )
+        /// <summary> WolframAlpha query. </summary>
+		/// <returns> XML string </returns>
+        public static async Task<string> QueryXML ( string query , string appid = k_default_appid )
         {
 			appid = appid!=null && appid.Length!=0 ? appid : k_default_appid;
             string uri = $"http://api.wolframalpha.com/v2/query?input={query}&appid={appid}";
@@ -32,6 +37,27 @@ namespace UWolframAlpha
 			#endif
 
 			return response;
+        }
+
+		/// <summary> WolframAlpha query. </summary>
+		/// <returns> Deserialized data. </returns>
+        public static async Task<QueryResult> Query ( string query , string appid = k_default_appid )
+        {
+			string xml = await QueryXML( query , appid );
+			return await DeserializeXML( xml );
+        }
+
+		/// <summary> Deserializes WolframAlpha XML query. </summary>
+		/// <returns> Deserialized data. </returns>
+		public static async Task<QueryResult> DeserializeXML ( string xml )
+        {
+			return await Task.Run( ()=>{
+				var serializer = new XmlSerializer(typeof(QueryResult));
+				var stream = new System.IO.StringReader(xml);
+				QueryResult result = (QueryResult)serializer.Deserialize( stream );
+				stream.Dispose();
+				return result;
+			});
         }
 
 		public static class Internal

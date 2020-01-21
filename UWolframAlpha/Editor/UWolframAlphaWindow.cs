@@ -41,7 +41,8 @@ namespace UWolframAlpha
 					var BUTTON = new Button(
 						async () => {
 							Debug.Log($"UWolframAlpha.Query( \"{INPUT.value}\" )");
-							OUTPUT.value = await UWolframAlpha.Query( INPUT.value );
+							var queryResult = await UWolframAlpha.Query( INPUT.value );
+							OUTPUT.value = JsonUtility.ToJson(queryResult,true);
 							OUTPUT.MarkDirtyRepaint();
 						}
 					);
