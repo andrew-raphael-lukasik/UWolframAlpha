@@ -65,14 +65,15 @@ namespace UWolframAlpha.Editor
 				rootVisualElement.Add( SCROLLVIEW );
 
 
-				var APPIP = new TextField( 100 , false , true , '#' );
+				var APPIP = new TextField( 100 , false , true , '*' );
 				{
 					var style = APPIP.style;
 					StyleMargin( style );
 					
 					APPIP.label = "appid:";
 					APPIP.value = EditorPrefs.GetString( k_editorprefskey_appid , string.Empty );
-					APPIP.RegisterValueChangedCallback( (e) => EditorPrefs.SetString(k_editorprefskey_appid,e.newValue) );
+					APPIP.RegisterValueChangedCallback( (e) => EditorPrefs.SetString( k_editorprefskey_appid , e.newValue ) );
+					APPIP.isDelayed = true;
 				}
 				rootVisualElement.Add( APPIP );
 
