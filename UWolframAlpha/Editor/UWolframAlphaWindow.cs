@@ -84,7 +84,11 @@ namespace UWolframAlpha.Editor
 			Debug.Log($"UWolframAlpha.Query( \"{INPUT.value}\" )");
 			OUTPUT.SetEnabled( false );
 
-			var queryResult = await UWolframAlpha.Query( INPUT.value );
+			string appid = EditorPrefs.GetString( k_editorprefskey_appid , string.Empty );
+			var queryResult =
+				appid.Length!=0
+				? await UWolframAlpha.Query( INPUT.value , appid )
+				: await UWolframAlpha.Query( INPUT.value );
 			
 			OUTPUT.Clear();
 			OUTPUT.SetEnabled( true );
