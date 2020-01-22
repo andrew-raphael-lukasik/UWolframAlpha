@@ -6,7 +6,14 @@ go to **Tools>WolframAlpha**
 or call
 
 ```c#
-string response = UWolframAlpha.Query( query , appid );
+string query = "phosphorus";
+var response = UWolframAlpha.Query( query );
+```
+```c#
+string query = "phosphorus";
+string appid = "your own appid goes here";
+var response = UWolframAlpha.Query( query , appid );
+string response_raw = UWolframAlpha.QueryXML( query , appid );
 ```
 
 TODO:
