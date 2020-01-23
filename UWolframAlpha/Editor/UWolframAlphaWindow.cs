@@ -12,24 +12,31 @@ namespace UWolframAlpha.Editor
 		const string k_editorprefskey_appid = "UWolframAlphaWindow.appid";
 		const string k_editorprefskey_input = "UWolframAlphaWindow.input_value";
 		Color _color1 = new Color{ r=0.6f , g=0.6f , b=0.6f , a=1 };
+
+		VisualElement ROOT;
 		VisualElement OUTPUT;
 		TextField INPUT;
 
 		public void OnEnable ()
 		{
-			if( OUTPUT==null )
+			if( ROOT==null )
 			{
+				ROOT = new VisualElement();
+				rootVisualElement.Add( ROOT );
+
 
 				var BAR = new VisualElement();
 				{
 					var style = BAR.style;
 					StyleMargin( style );
 					style.flexDirection = FlexDirection.Row;
-					style.minHeight = 30;
-
-
+					style.minHeight = 40;
+				}
+				{
 					INPUT = new TextField();
-					INPUT.style.flexGrow = 1f;
+					{
+						INPUT.style.flexGrow = 1f;
+					}
 					{
 						INPUT.isDelayed = true;
 						INPUT.value = EditorPrefs.GetString( k_editorprefskey_input , "Answer to the Ultimate Question of Life, the Universe, and Everything" );
@@ -42,13 +49,15 @@ namespace UWolframAlpha.Editor
 
 
 					var BUTTON = new Button( OnButtonDown );
-					BUTTON.style.flexGrow = 0.5f;
+					{
+						BUTTON.style.flexGrow = 0.5f;
+					}
 					{
 						BUTTON.text = "=";
 					}
 					BAR.Add( BUTTON );
 				}
-				rootVisualElement.Add( BAR );
+				ROOT.Add( BAR );
 
 
 				var SCROLLVIEW = new ScrollView();
@@ -58,24 +67,47 @@ namespace UWolframAlpha.Editor
 					StyleBorder( style , _color1 );
 					style.flexDirection = FlexDirection.Column;
 					style.flexGrow = 1f;
-
+				}
+				{
 					OUTPUT = new VisualElement();
 					SCROLLVIEW.Add( OUTPUT );
 				}
-				rootVisualElement.Add( SCROLLVIEW );
+				ROOT.Add( SCROLLVIEW );
 
 
-				var APPIP = new TextField( 100 , false , true , '*' );
+				var APPID_BAR = new VisualElement();
 				{
-					var style = APPIP.style;
-					StyleMargin( style );
-					
-					APPIP.label = "appid:";
-					APPIP.value = EditorPrefs.GetString( k_editorprefskey_appid , string.Empty );
-					APPIP.RegisterValueChangedCallback( (e) => EditorPrefs.SetString( k_editorprefskey_appid , e.newValue ) );
-					APPIP.isDelayed = true;
+					var style = APPID_BAR.style;
+					StyleMargin( APPID_BAR.style );
+					style.minHeight = 20;
+					style.flexDirection = FlexDirection.Row;
 				}
-				rootVisualElement.Add( APPIP );
+				{
+					var APPID_FIELD = new TextField( 100 , false , true , '*' );
+					{
+						var style = APPID_FIELD.style;
+						style.flexGrow = 0.5f;
+					}
+					{
+						var LABEL = new Label("appid:");
+						APPID_BAR.Add( LABEL );
+
+						APPID_FIELD.value = EditorPrefs.GetString( k_editorprefskey_appid , string.Empty );
+						APPID_FIELD.RegisterValueChangedCallback( (e) => EditorPrefs.SetString( k_editorprefskey_appid , e.newValue ) );
+						APPID_FIELD.isDelayed = true;
+
+						LABEL.SetEnabled( false );
+					}
+					APPID_BAR.Add( APPID_FIELD );
+
+					var EMPTY = new VisualElement();
+					{
+						var style = EMPTY.style;
+						style.flexGrow = 1;
+					}
+					APPID_BAR.Add( EMPTY );
+				}
+				ROOT.Add( APPID_BAR );
 
 			}
 		}
