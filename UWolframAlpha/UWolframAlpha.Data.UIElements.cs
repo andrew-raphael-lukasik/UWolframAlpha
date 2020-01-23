@@ -156,7 +156,7 @@ namespace UWolframAlpha.Data
 			var ROOT = new VisualElement();
 			{
 				var SRC = new TextField();
-				SRC.value = alt;
+				SRC.value = src;
 				SRC.isReadOnly = true;
 				ROOT.Add( SRC );
 				
