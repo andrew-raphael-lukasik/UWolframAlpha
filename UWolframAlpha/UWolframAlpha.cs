@@ -94,15 +94,6 @@ namespace UWolframAlpha
 						await Task.Delay( 100 );
 					}
 
-					#if UNITY_EDITOR
-					if( UnityEditor.EditorApplication.isPlaying==false )
-					{
-						//Debug.LogWarning( "aborted" );
-						www.Dispose();
-						throw new System.Threading.Tasks.TaskCanceledException( "ignore, this is fine (async task ended outside play mode)" );//return null;
-					}
-					#endif
-
 					if( www.isNetworkError || www.isHttpError )
 					{
 						#if DEBUG
