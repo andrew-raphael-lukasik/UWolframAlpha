@@ -28,7 +28,7 @@ namespace UWolframAlpha.Data
 		// [XmlAttribute("error")] public bool error;
 		// [XmlAttribute("numsubpods")] public int numsubpods;
 		// [XmlAttribute("primary")] public bool primary;
-		[XmlElement("subpod")] public SubPod[] subpod_array;
+		[XmlElement("subpod")] public SubPod subpod;
 		[XmlElement("expressiontypes")] public ExpressionTypes expressiontypes;
 		[XmlElement("states")] public States states;
 		[XmlElement("infos")] public Infos infos;
