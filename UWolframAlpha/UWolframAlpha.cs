@@ -109,24 +109,7 @@ namespace UWolframAlpha
 					}
 					else
 					{
-						var result = DownloadHandlerTexture.GetContent( www );
-						if( result!=null )
-						{
-							int width = result.width;
-							int height = result.height;
-							var format = result.format;
-							var pixels = result.GetPixels();
-
-							UnityEngine.Object.Destroy( result );
-
-							result = new Texture2D( width , height , format , true );
-							result.SetPixels( pixels );
-							result.filterMode = FilterMode.Trilinear;
-							result.Apply();
-						}
-						else Debug.LogError("texture is null while seemingly no network error");
-
-						return result;
+						return DownloadHandlerTexture.GetContent( www );
 					}
 				}
 			}
