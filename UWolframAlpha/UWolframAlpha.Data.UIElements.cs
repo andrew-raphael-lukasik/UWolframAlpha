@@ -38,7 +38,8 @@ namespace UWolframAlpha.Data
 				LABEL.SetEnabled( false );
 				ROOT.Add( LABEL );
 
-				ROOT.Add( subpod.CreateVisualElement() );
+				foreach( var next in subpod_array )
+					ROOT.Add( next.CreateVisualElement() );
 			}
 			return ROOT;
 		}
