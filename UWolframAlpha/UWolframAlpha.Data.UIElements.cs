@@ -20,8 +20,6 @@ namespace UWolframAlpha.Data
 				if( pod_array!=null )
 					foreach( var next in pod_array )
 						ROOT.Add( next.CreateVisualElement() );
-
-				ROOT.Add( assumptions.CreateVisualElement() );
 			}
 			return ROOT;
 		}
@@ -41,8 +39,6 @@ namespace UWolframAlpha.Data
 				ROOT.Add( LABEL );
 
 				ROOT.Add( subpod.CreateVisualElement() );
-				ROOT.Add( states.CreateVisualElement() );
-				ROOT.Add( infos.CreateVisualElement() );
 			}
 			return ROOT;
 		}
@@ -68,82 +64,16 @@ namespace UWolframAlpha.Data
 		}
 	}
 
-	public partial struct States : ICreateVisualElement
-	{
-		public VisualElement CreateVisualElement ()
-		{
-			var ROOT = new VisualElement();
-			ROOT.Add( _Dev.TypeLabel(this) );
-			{
-				if( state_array!=null )
-					foreach( var next in state_array )
-						ROOT.Add( next.CreateVisualElement() );
-			}
-			return ROOT;
-		}
-	}
-
-	public partial struct State : ICreateVisualElement
-	{
-		public VisualElement CreateVisualElement ()
-		{
-			var ROOT = new VisualElement();
-			ROOT.Add( _Dev.TypeLabel(this) );
-			{
-				var LABEL = new Label(name);
-				LABEL.SetEnabled( false );
-				ROOT.Add( LABEL );
-
-				ROOT.Add( new Label(input) );
-			}
-			return ROOT;
-		}
-	}
-
-	public partial struct Infos : ICreateVisualElement
-	{
-		public VisualElement CreateVisualElement ()
-		{
-			var ROOT = new VisualElement();
-			ROOT.Add( _Dev.TypeLabel(this) );
-			{
-				if( info_array!=null )
-					foreach( var next in info_array )
-						ROOT.Add( next.CreateVisualElement() );
-			}
-			return ROOT;
-		}
-	}
-
-	public partial struct Info : ICreateVisualElement
-	{
-		public VisualElement CreateVisualElement ()
-		{
-			var ROOT = new VisualElement();
-			ROOT.Add( _Dev.TypeLabel(this) );
-			{
-				ROOT.Add( new Label(text) );
-				ROOT.Add( img.CreateVisualElement() );
-				
-				if( link_array!=null )
-					foreach( var next in link_array )
-						ROOT.Add( next.CreateVisualElement() );
-			}
-			return ROOT;
-		}
-	}
-
 	public partial struct Img : ICreateVisualElement
 	{
 		public VisualElement CreateVisualElement ()
 		{
 			var ROOT = new VisualElement();
 			ROOT.Add( _Dev.TypeLabel(this) );
-			// _Stylist.SetBorder( ROOT.style , Color.cyan , 1 );
 			{
 				// TODO: display image from src field
 
-				// ROOT.Add( _Factory.TextField(src) );
+				ROOT.Add( _Factory.TextField(src) );
 				// ROOT.Add( _Factory.TextField(alt) );
 				// ROOT.Add( _Factory.TextField(title) );
 			}
@@ -188,13 +118,7 @@ namespace UWolframAlpha.Data
 			var ROOT = new VisualElement();
 			ROOT.Add( _Dev.TypeLabel(this) );
 			{
-				ROOT.Add( new Label(type) );
-				ROOT.Add( new Label(word) );
-				ROOT.Add( new Label(template) );
-
-				if( value_array!=null )
-					foreach( var next in value_array )
-						ROOT.Add( next.CreateVisualElement() );
+				//TODO: create a fitting ui representation
 			}
 			return ROOT;
 		}
