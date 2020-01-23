@@ -1,4 +1,4 @@
-﻿// #define PRINT_TYPE
+﻿#define PRINT_TYPE
 
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -41,7 +41,6 @@ namespace UWolframAlpha.Data
 				ROOT.Add( LABEL );
 
 				ROOT.Add( subpod.CreateVisualElement() );
-				ROOT.Add( expressiontypes.CreateVisualElement() );
 				ROOT.Add( states.CreateVisualElement() );
 				ROOT.Add( infos.CreateVisualElement() );
 			}
@@ -67,26 +66,6 @@ namespace UWolframAlpha.Data
 			}
 			return ROOT;
 		}
-	}
-
-	public partial struct ExpressionTypes : ICreateVisualElement
-	{
-		public VisualElement CreateVisualElement ()
-		{
-			var ROOT = new VisualElement();
-			ROOT.Add( _Dev.TypeLabel(this) );
-			{
-				if( expressiontype_array!=null )
-					foreach( var next in expressiontype_array )
-						ROOT.Add( next.CreateVisualElement() );
-			}
-			return ROOT;
-		}
-	}
-
-	public partial struct ExpressionType : ICreateVisualElement
-	{
-		public VisualElement CreateVisualElement () => new Label(name);
 	}
 
 	public partial struct States : ICreateVisualElement
@@ -162,9 +141,11 @@ namespace UWolframAlpha.Data
 			ROOT.Add( _Dev.TypeLabel(this) );
 			// _Stylist.SetBorder( ROOT.style , Color.cyan , 1 );
 			{
-				ROOT.Add( _Factory.TextField(src) );
-				ROOT.Add( _Factory.TextField(alt) );
-				ROOT.Add( _Factory.TextField(title) );
+				// TODO: display image from src field
+
+				// ROOT.Add( _Factory.TextField(src) );
+				// ROOT.Add( _Factory.TextField(alt) );
+				// ROOT.Add( _Factory.TextField(title) );
 			}
 			return ROOT;
 		}
