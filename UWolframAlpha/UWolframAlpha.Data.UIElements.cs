@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿// #define PRINT_TYPE
+
+using UnityEngine;
 using UnityEngine.UIElements;
 
 namespace UWolframAlpha.Data
@@ -9,6 +11,7 @@ namespace UWolframAlpha.Data
 		public VisualElement CreateVisualElement ()
 		{
 			var ROOT = new VisualElement();
+			ROOT.Add( _Dev.TypeLabel(this) );
 			{
 				var INFOBAR = new Label($"success:{success} | error:{error} | timedout:{timedout} | timing:{timing}");
 				INFOBAR.SetEnabled( false );
@@ -29,6 +32,7 @@ namespace UWolframAlpha.Data
 		public VisualElement CreateVisualElement ()
 		{
 			var ROOT = new VisualElement();
+			ROOT.Add( _Dev.TypeLabel(this) );
 			_Stylist.Box( ROOT );
 			{
 				var LABEL = new Label(title);
@@ -53,6 +57,7 @@ namespace UWolframAlpha.Data
 		public VisualElement CreateVisualElement ()
 		{
 			var ROOT = new VisualElement();
+			ROOT.Add( _Dev.TypeLabel(this) );
 			{
 				var LABEL = new Label(title);
 				LABEL.SetEnabled( false );
@@ -74,6 +79,7 @@ namespace UWolframAlpha.Data
 		public VisualElement CreateVisualElement ()
 		{
 			var ROOT = new VisualElement();
+			ROOT.Add( _Dev.TypeLabel(this) );
 			{
 				if( expressiontype_array!=null )
 					foreach( var next in expressiontype_array )
@@ -93,6 +99,7 @@ namespace UWolframAlpha.Data
 		public VisualElement CreateVisualElement ()
 		{
 			var ROOT = new VisualElement();
+			ROOT.Add( _Dev.TypeLabel(this) );
 			{
 				if( state_array!=null )
 					foreach( var next in state_array )
@@ -107,6 +114,7 @@ namespace UWolframAlpha.Data
 		public VisualElement CreateVisualElement ()
 		{
 			var ROOT = new VisualElement();
+			ROOT.Add( _Dev.TypeLabel(this) );
 			{
 				var LABEL = new Label(name);
 				LABEL.SetEnabled( false );
@@ -123,6 +131,7 @@ namespace UWolframAlpha.Data
 		public VisualElement CreateVisualElement ()
 		{
 			var ROOT = new VisualElement();
+			ROOT.Add( _Dev.TypeLabel(this) );
 			{
 				if( info_array!=null )
 					foreach( var next in info_array )
@@ -137,6 +146,7 @@ namespace UWolframAlpha.Data
 		public VisualElement CreateVisualElement ()
 		{
 			var ROOT = new VisualElement();
+			ROOT.Add( _Dev.TypeLabel(this) );
 			{
 				ROOT.Add( new Label(text) );
 				img.CreateVisualElement();
@@ -154,6 +164,8 @@ namespace UWolframAlpha.Data
 		public VisualElement CreateVisualElement ()
 		{
 			var ROOT = new VisualElement();
+			ROOT.Add( _Dev.TypeLabel(this) );
+			// _Stylist.SetBorder( ROOT.style , Color.cyan , 1 );
 			{
 				var SRC = new TextField();
 				SRC.value = src;
@@ -181,6 +193,7 @@ namespace UWolframAlpha.Data
 		public VisualElement CreateVisualElement ()
 		{
 			var ROOT = new VisualElement();
+			ROOT.Add( _Dev.TypeLabel(this) );
 			{
 				ROOT.Add( new Label(url) );
 				ROOT.Add( new Label(text) );
@@ -195,6 +208,7 @@ namespace UWolframAlpha.Data
 		public VisualElement CreateVisualElement ()
 		{
 			var ROOT = new VisualElement();
+			ROOT.Add( _Dev.TypeLabel(this) );
 			{
 				if( assumption_array!=null )
 					foreach( var next in assumption_array )
@@ -209,6 +223,7 @@ namespace UWolframAlpha.Data
 		public VisualElement CreateVisualElement ()
 		{
 			var ROOT = new VisualElement();
+			ROOT.Add( _Dev.TypeLabel(this) );
 			{
 				ROOT.Add( new Label(type) );
 				ROOT.Add( new Label(word) );
@@ -227,6 +242,7 @@ namespace UWolframAlpha.Data
 		public VisualElement CreateVisualElement ()
 		{
 			var ROOT = new VisualElement();
+			ROOT.Add( _Dev.TypeLabel(this) );
 			{
 				ROOT.Add( new Label(name) );
 				ROOT.Add( new Label(desc) );
@@ -234,6 +250,20 @@ namespace UWolframAlpha.Data
 			}
 			return ROOT;
 		}
+	}
+
+	static class _Dev
+	{
+		public static Label TypeLabel ( ICreateVisualElement icve )
+		#if PRINT_TYPE
+			{
+				var label = new Label($"type: {icve.GetType().Name}");
+				label.style.color = Color.magenta;
+				return label;
+			}
+		#else
+			=> null;
+		#endif
 	}
 
 	static class _Stylist
