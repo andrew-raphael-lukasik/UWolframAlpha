@@ -30,7 +30,7 @@ namespace UWolframAlpha.Editor
 					var style = BAR.style;
 					StyleMargin( style );
 					style.flexDirection = FlexDirection.Row;
-					style.minHeight = 40;
+					style.minHeight = 30;
 				}
 				{
 					INPUT = new TextField();
