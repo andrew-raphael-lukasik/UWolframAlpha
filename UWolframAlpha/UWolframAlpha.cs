@@ -22,7 +22,7 @@ namespace UWolframAlpha
             string uri = $"http://api.wolframalpha.com/v2/query?input={query}&appid={appid}";
 			
 			#if DEBUG
-			Debug.Log($"\tWebRequest: {uri}");
+			Debug.Log($"\tWebRequest: {uri.Replace(appid,"<appid>")}");
 			#endif
             
             var webRequest = await Internal.WebRequest( uri );
