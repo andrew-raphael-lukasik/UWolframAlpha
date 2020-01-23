@@ -132,7 +132,7 @@ namespace UWolframAlpha.Data
 		}
 	}
 
-	public partial struct Info
+	public partial struct Info : ICreateVisualElement
 	{
 		public VisualElement CreateVisualElement ()
 		{
