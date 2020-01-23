@@ -1,4 +1,4 @@
-﻿#define PRINT_TYPE
+﻿// #define PRINT_TYPE
 
 using UnityEngine;
 using UnityEngine.UIElements;
