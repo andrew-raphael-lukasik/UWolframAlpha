@@ -62,9 +62,7 @@ namespace UWolframAlpha.Data
 
 				ROOT.Add( img.CreateVisualElement() );
 
-				var PLAINTEXT = new TextField();
-				PLAINTEXT.value = plaintext;
-				PLAINTEXT.isReadOnly = true;
+				var PLAINTEXT = _Factory.TextField( plaintext );
 				ROOT.Add( PLAINTEXT );
 			}
 			return ROOT;
@@ -164,22 +162,9 @@ namespace UWolframAlpha.Data
 			ROOT.Add( _Dev.TypeLabel(this) );
 			// _Stylist.SetBorder( ROOT.style , Color.cyan , 1 );
 			{
-				var SRC = new TextField();
-				SRC.value = src;
-				SRC.isReadOnly = true;
-				ROOT.Add( SRC );
-				
-				var ALT = new TextField();
-				ALT.value = alt;
-				ALT.isReadOnly = true;
-				ALT.SetEnabled( false );
-				ROOT.Add( ALT );
-
-				var l  = new Label(title);
-				
-
-				ROOT.Add( new Label(title) );
-				ROOT.Add( new Label($"width:{width} | height:{height}") );
+				ROOT.Add( _Factory.TextField(src) );
+				ROOT.Add( _Factory.TextField(alt) );
+				ROOT.Add( _Factory.TextField(title) );
 			}
 			return ROOT;
 		}
@@ -246,6 +231,18 @@ namespace UWolframAlpha.Data
 				ROOT.Add( new Label(input) );
 			}
 			return ROOT;
+		}
+	}
+
+	static class _Factory
+	{
+		public static TextField TextField ( string text )
+		{
+			if( text?.Length==0 ) return null;
+			var textField = new TextField( 0 , true , false , '#' );
+			textField.value = text;
+			textField.isReadOnly = true;
+			return textField;
 		}
 	}
 
