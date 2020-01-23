@@ -21,7 +21,7 @@ namespace UWolframAlpha.Data
 					foreach( var next in pod_array )
 						ROOT.Add( next.CreateVisualElement() );
 
-				assumptions.CreateVisualElement();
+				ROOT.Add( assumptions.CreateVisualElement() );
 			}
 			return ROOT;
 		}
@@ -40,13 +40,10 @@ namespace UWolframAlpha.Data
 				LABEL.SetEnabled( false );
 				ROOT.Add( LABEL );
 
-				if( subpod_array!=null )
-					foreach( var next in subpod_array )
-						ROOT.Add( next.CreateVisualElement() );
-
-				expressiontypes.CreateVisualElement();
-				states.CreateVisualElement();
-				infos.CreateVisualElement();
+				ROOT.Add( subpod.CreateVisualElement() );
+				ROOT.Add( expressiontypes.CreateVisualElement() );
+				ROOT.Add( states.CreateVisualElement() );
+				ROOT.Add( infos.CreateVisualElement() );
 			}
 			return ROOT;
 		}
@@ -63,7 +60,7 @@ namespace UWolframAlpha.Data
 				LABEL.SetEnabled( false );
 				ROOT.Add( LABEL );
 
-				img.CreateVisualElement();
+				ROOT.Add( img.CreateVisualElement() );
 
 				var PLAINTEXT = new TextField();
 				PLAINTEXT.value = plaintext;
@@ -149,7 +146,7 @@ namespace UWolframAlpha.Data
 			ROOT.Add( _Dev.TypeLabel(this) );
 			{
 				ROOT.Add( new Label(text) );
-				img.CreateVisualElement();
+				ROOT.Add( img.CreateVisualElement() );
 				
 				if( link_array!=null )
 					foreach( var next in link_array )
