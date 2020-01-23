@@ -242,4 +242,40 @@ namespace UWolframAlpha.Data
 
 	interface ICreateVisualElement { VisualElement CreateVisualElement(); }
 
+	public class WebImage : Image, System.IDisposable
+    {
+		string _url;
+		Texture2D _texture;
+		Image _image;
+        
+		public WebImage ()
+			: this( string.Empty ) {}
+		public WebImage ( string url )
+			: base()
+		{
+			this._url = url;
+			_image = new Image();
+			_image.scaleMode = ScaleMode.ScaleToFit;
+			_image.style.alignSelf = Align.FlexStart;
+			this.Add( _image );
+			StartDownloadingTexture();
+		}
+
+		~WebImage () => Dispose();
+
+		public void Dispose ()
+		{
+			if( _texture!=null )
+				Object.Destroy( _texture );
+		}
+
+		async void StartDownloadingTexture ()
+		{
+			_texture = await UWolframAlpha.Internal.LoadTexture( _url );
+			_image.image = _texture;
+			MarkDirtyRepaint();
+		}
+		
+    }
+
 }
