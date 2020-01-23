@@ -73,11 +73,9 @@ namespace UWolframAlpha.Data
 			var ROOT = new VisualElement();
 			ROOT.Add( _Dev.TypeLabel(this) );
 			{
-				// TODO: display image from src field
-
-				ROOT.Add( _Factory.Text(src) );
-				// ROOT.Add( _Factory.TextField(alt) );
-				// ROOT.Add( _Factory.TextField(title) );
+				ROOT.Add( new WebImage(src) );
+				// ROOT.Add( _Factory.Text(alt) );
+				// ROOT.Add( _Factory.Text(title) );
 			}
 			return ROOT;
 		}
