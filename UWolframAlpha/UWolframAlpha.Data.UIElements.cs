@@ -239,7 +239,7 @@ namespace UWolframAlpha.Data
 		public static TextField TextField ( string text )
 		{
 			if( text?.Length==0 ) return null;
-			var textField = new TextField( 0 , true , false , '#' );
+			var textField = new TextField();
 			textField.value = text;
 			textField.isReadOnly = true;
 			return textField;
