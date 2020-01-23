@@ -10,9 +10,20 @@ namespace UWolframAlpha.Data
 	{
 		[XmlAttribute("success")] public bool success;
 		[XmlAttribute("error")] public bool error;
-		// [XmlAttribute("numpods")] public int numpods;
+		[XmlAttribute("numpods")] public int numpods;
+		[XmlAttribute("datatypes")] public string datatypes;
 		[XmlAttribute("timedout")] public string timedout;
+		[XmlAttribute("timedoutpods")] public string timedoutpods;
 		[XmlAttribute("timing")] public float timing;
+		[XmlAttribute("parsetiming")] public float parsetiming;
+		[XmlAttribute("parsetimedout")] public bool parsetimedout;
+		[XmlAttribute("recalculate")] public string recalculate;
+		[XmlAttribute("id")] public string id;
+		[XmlAttribute("host")] public string host;
+		[XmlAttribute("server")] public int server;
+		[XmlAttribute("related")] public string related;
+		[XmlAttribute("version")] public string version;
+
 		[XmlElement("pod")] public Pod[] pod_array;
 		[XmlElement("assumptions")] public Assumptions assumptions;
 		
@@ -22,12 +33,13 @@ namespace UWolframAlpha.Data
 	[System.Serializable] public partial struct Pod
 	{
 		[XmlAttribute("title")] public string title;
-		// [XmlAttribute("scanner")] public string scanner;
-		// [XmlAttribute("id")] public string id;
+		[XmlAttribute("scanner")] public string scanner;
+		[XmlAttribute("id")] public string id;
 		[XmlAttribute("position")] public int position;
-		// [XmlAttribute("error")] public bool error;
-		// [XmlAttribute("numsubpods")] public int numsubpods;
-		// [XmlAttribute("primary")] public bool primary;
+		[XmlAttribute("error")] public bool error;
+		[XmlAttribute("numsubpods")] public int numsubpods;
+		[XmlAttribute("primary")] public bool primary;
+
 		[XmlElement("subpod")] public SubPod subpod;
 		[XmlElement("expressiontypes")] public ExpressionTypes expressiontypes;
 		[XmlElement("states")] public States states;
