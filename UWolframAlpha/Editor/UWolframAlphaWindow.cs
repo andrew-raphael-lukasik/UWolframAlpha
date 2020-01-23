@@ -22,6 +22,10 @@ namespace UWolframAlpha.Editor
 			if( ROOT==null )
 			{
 				ROOT = new VisualElement();
+				{
+					var style = ROOT.style;
+					style.flexGrow = 1f;
+				}
 				rootVisualElement.Add( ROOT );
 
 
@@ -65,7 +69,6 @@ namespace UWolframAlpha.Editor
 					var style = SCROLLVIEW.style;
 					StyleMargin( style );
 					StyleBorder( style , _color1 );
-					style.flexDirection = FlexDirection.Column;
 					style.flexGrow = 1f;
 				}
 				{
