@@ -64,15 +64,11 @@ namespace UWolframAlpha
 				{
 					var asyncOp = www.SendWebRequest();
 					while( asyncOp.isDone==false )
-					{
-						await Task.Delay( System.TimeSpan.FromMilliseconds( 100 ) );
-					}
+						await Task.Delay( System.TimeSpan.FromMilliseconds(100) );
 
 					#if DEBUG
 					if( www.isNetworkError || www.isHttpError )
-					{
 						Debug.LogWarning( www.error );
-					}
 					#endif
 				}
 				return www;
@@ -81,11 +77,9 @@ namespace UWolframAlpha
 			/// <summary> Creates Texture2D from given URI </summary>
 			public static async Task<Texture2D> LoadTexture ( string url )
 			{
-				//asserions:
 				Assert.IsNotNull( url , "url is null" );
 				Assert.IsTrue( url.Length!=0 , "url is of Length 0" );
 
-				//
 				using( UnityWebRequest www = UnityWebRequestTexture.GetTexture( url ) )
 				{
 					var asyncOp = www.SendWebRequest();
@@ -97,43 +91,18 @@ namespace UWolframAlpha
 					if( www.isNetworkError || www.isHttpError )
 					{
 						#if DEBUG
-						Debug.Log( $"{ www.error }, URL:{ www.url }" );
+						Debug.LogError($"{www.error} at URL:{www.url}");
 						#endif
 
 						return null;
 					}
-					else if( www.isDone==false )
-					{
-						Debug.LogError( "www.isDone==false" );
-						return null;
-					}
 					else
-					{
 						return DownloadHandlerTexture.GetContent( www );
-					}
 				}
 			}
 
-			public static bool IsInternetReachable ()
-			{
-				var status = Application.internetReachability;
-				if( status==0 )
-				{
-					#if DEBUG
-					Debug.LogError( "internet access attempt failed" );
-					#endif
-					
-					return false;
-				}
-				else
-				{
-					#if DEBUG
-					Debug.Log( "internet access attempt succeeded" );
-					#endif
+			public static bool IsInternetReachable () => Application.internetReachability!=0;
 
-					return true;
-				}
-			}
 		}
 
     }
