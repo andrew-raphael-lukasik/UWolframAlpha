@@ -52,6 +52,8 @@ namespace UWolframAlpha.Data
 	[System.Serializable] public partial struct SubPod
 	{
 		[XmlAttribute("title")] public string title;
+
+		[XmlElement("imagesource")] public string imagesource;
 		[XmlElement("img")] public Img img;
 		[XmlElement("plaintext")] public string plaintext;
 		

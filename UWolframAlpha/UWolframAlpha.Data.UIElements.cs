@@ -60,6 +60,9 @@ namespace UWolframAlpha.Data
 
 				ROOT.Add( img.CreateVisualElement() );
 
+				var IMAGESOURCE = _Factory.Text( "Source:" , imagesource );
+				ROOT.Add( IMAGESOURCE );
+
 				var PLAINTEXT = _Factory.TextGrid( plaintext );
 				ROOT.Add( PLAINTEXT );
 			}
@@ -142,9 +145,9 @@ namespace UWolframAlpha.Data
 
 	static class _Factory
 	{
-		public static VisualElement Text ( string text )
+		public static TextField Text ( string text )
 		{
-			if( text?.Length!=0 )
+			if( text!=null && text.Length!=0 )
 			{
 				var FIELD = new TextField();
 				FIELD.value = text;
@@ -153,9 +156,15 @@ namespace UWolframAlpha.Data
 			}
 			else return null;
 		}
+		public static TextField Text ( string label , string text )
+		{
+			var FIELD = Text( text );
+			if( FIELD!=null ) FIELD.label = label;
+			return FIELD;
+		}
 		public static VisualElement TextGrid ( string text )
 		{
-			if( text?.Length!=0 )
+			if( text!=null && text.Length!=0 )
 			{
 				var ROOT = new VisualElement();
 
