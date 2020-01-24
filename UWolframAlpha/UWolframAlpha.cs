@@ -94,10 +94,7 @@ namespace UWolframAlpha
 
 						return null;
 					}
-					else
-					{
-						return DownloadHandlerTexture.GetContent( www );
-					}
+					else return DownloadHandlerTexture.GetContent( www );
 				}
 			}
 
