@@ -84,9 +84,7 @@ namespace UWolframAlpha
 				{
 					var asyncOp = www.SendWebRequest();
 					while( asyncOp.isDone==false )
-					{
 						await Task.Delay( 100 );
-					}
 
 					if( www.isNetworkError || www.isHttpError )
 					{
