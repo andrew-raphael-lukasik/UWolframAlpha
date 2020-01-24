@@ -1,5 +1,6 @@
 ﻿// #define PRINT_TYPE
 
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -269,8 +270,15 @@ namespace UWolframAlpha.Data
 
 		async void StartDownloadingTexture ()
 		{
+			while( !UWolframAlpha.Internal.IsInternetReachable() )
+			{
+				await Task.Delay(1000);
+				if( this==null ) return;
+			}
+			
 			_texture = await UWolframAlpha.Internal.LoadTexture( _url );
 			_image.image = _texture;
+
 			MarkDirtyRepaint();
 		}
 		
