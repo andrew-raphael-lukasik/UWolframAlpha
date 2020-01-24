@@ -80,7 +80,7 @@ namespace UWolframAlpha
 				Assert.IsNotNull( url , "url is null" );
 				Assert.IsTrue( url.Length!=0 , "url is of Length 0" );
 
-				using( UnityWebRequest www = UnityWebRequestTexture.GetTexture( url ) )
+				using( var www = UnityWebRequestTexture.GetTexture(url) )
 				{
 					var asyncOp = www.SendWebRequest();
 					while( asyncOp.isDone==false )
@@ -97,7 +97,9 @@ namespace UWolframAlpha
 						return null;
 					}
 					else
+					{
 						return DownloadHandlerTexture.GetContent( www );
+					}
 				}
 			}
 
