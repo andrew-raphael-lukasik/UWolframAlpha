@@ -77,9 +77,17 @@ namespace UWolframAlpha.Data
 			var ROOT = new VisualElement();
 			ROOT.Add( _Dev.TypeLabel(this) );
 			{
+				var style = ROOT.style;
+				style.flexDirection = FlexDirection.Row;
+			}
+			{
 				ROOT.Add( new WebImage(src) );
 				// ROOT.Add( _Factory.Text(alt) );
 				// ROOT.Add( _Factory.Text(title) );
+				
+				var SPACE = new VisualElement();
+				SPACE.style.flexGrow = 1f;
+				ROOT.Add( SPACE );
 			}
 			return ROOT;
 		}
