@@ -253,19 +253,18 @@ namespace UWolframAlpha.Data
 	public class WebImage : Image, System.IDisposable
     {
 		string _url;
-		Texture2D _texture;
-		Image _image;
         
 		public WebImage ()
 			: this( string.Empty ) {}
 		public WebImage ( string url )
 			: base()
 		{
-			this._url = url;
-			_image = new Image();
-			_image.scaleMode = ScaleMode.ScaleToFit;
-			_image.style.alignSelf = Align.FlexStart;
-			this.Add( _image );
+			_url = url;
+			
+			style.maxWidth = 600;
+			style.maxHeight = 300;
+			scaleMode = ScaleMode.ScaleToFit;
+
 			StartDownloadingTexture();
 		}
 
@@ -273,8 +272,8 @@ namespace UWolframAlpha.Data
 
 		public void Dispose ()
 		{
-			if( _texture!=null )
-				Object.Destroy( _texture );
+			if( image!=null )
+				Object.Destroy( image );
 		}
 
 		async void StartDownloadingTexture ()
@@ -284,9 +283,9 @@ namespace UWolframAlpha.Data
 				await Task.Delay(1000);
 				if( this==null ) return;
 			}
-			
-			_texture = await UWolframAlpha.Internal.LoadTexture( _url );
-			_image.image = _texture;
+
+			//image = await UWolframAlpha.Internal.LoadTexture("https://upload.wikimedia.org/wikipedia/commons/0/0e/Tree_example_VIS.jpg");
+			image = await UWolframAlpha.Internal.LoadTexture( _url );
 
 			MarkDirtyRepaint();
 		}
