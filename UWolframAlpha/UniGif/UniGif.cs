@@ -36,9 +36,9 @@ public static partial class UniGif
 		}
 
 		// Decode to textures from GIF data
-		var gifTexList = await DecodeTextureAsync( gifData , filterMode , wrapMode );
+		var textures = await DecodeTexturesAsync( gifData , filterMode , wrapMode );
 
-		if( gifTexList==null || gifTexList.Length==0 )
+		if( textures==null || textures.Length==0 )
 		{
 			Debug.LogError( "GIF texture decode error." );
 			await Task.Delay( 1 );
@@ -48,6 +48,38 @@ public static partial class UniGif
 		int width = gifData.m_logicalScreenWidth;
 		int height = gifData.m_logicalScreenHeight;
 
-		return gifTexList;
+		return textures;
+	}
+
+	public async static Task<Texture2D> GetTextureAsync
+	(
+		byte[] bytes ,
+		FilterMode filterMode = FilterMode.Bilinear ,
+		TextureWrapMode wrapMode = TextureWrapMode.Clamp ,
+		bool debugLog = false
+	)
+	{
+		// Set GIF data
+		var gifData = new GifData();
+		if( !SetGifData( bytes , ref gifData , debugLog ) )
+		{
+			Debug.LogError( "GIF file data set error." );
+			await Task.Delay( 1 );
+		}
+
+		// Decode to textures from GIF data
+		Texture2D texture = await DecodeTextureAsync( gifData , filterMode , wrapMode );
+
+		if( texture==null )
+		{
+			Debug.LogError( "GIF texture decode error." );
+			await Task.Delay( 1 );
+		}
+
+		int loopCount = gifData.m_appEx.loopCount;
+		int width = gifData.m_logicalScreenWidth;
+		int height = gifData.m_logicalScreenHeight;
+
+		return texture;
 	}
 }

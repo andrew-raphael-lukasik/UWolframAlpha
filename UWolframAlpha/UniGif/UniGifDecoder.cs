@@ -22,7 +22,7 @@ public static partial class UniGif
 	/// <param name="filterMode">Textures filter mode</param>
 	/// <param name="wrapMode">Textures wrap mode</param>
 	/// <returns>IEnumerator</returns>
-	static async Task<GifTexture[]> DecodeTextureAsync
+	static async Task<GifTexture[]> DecodeTexturesAsync
 	(
 		GifData gifData ,
 		FilterMode filterMode ,
@@ -62,7 +62,7 @@ public static partial class UniGif
 			// Set pixel data
 			int dataIndex = 0;
 			// Reverse set pixels. because GIF data starts from the top left.
-			for( int y = tex.height - 1 ; y >= 0 ; y-- )
+			for( int y = tex.height - 1 ; y>=0 ; y-- )
 			{
 				SetTexturePixelRow( tex , y , gifData.m_imageBlockList[i] , decodedData , ref dataIndex , colorTable , bgColor , transparentIndex , filledTexture );
 			}
@@ -79,6 +79,60 @@ public static partial class UniGif
 		}
 
 		return gifTexList.ToArray();
+	}
+
+	static async Task<Texture2D> DecodeTextureAsync
+	(
+		GifData gifData ,
+		FilterMode filterMode ,
+		TextureWrapMode wrapMode
+	)
+	{
+		if( gifData.m_imageBlockList==null || gifData.m_imageBlockList.Count<1 )
+		{
+			await Task.Delay( 1 );
+		}
+
+		List<ushort> disposalMethodList = new List<ushort>( gifData.m_imageBlockList.Count );
+
+		int imgIndex = 0;
+		int i = 0;
+
+		byte[] decodedData = GetDecodedData( gifData.m_imageBlockList[i] );
+
+		GraphicControlExtension? graphicCtrlEx = GetGraphicCtrlExt( gifData , imgIndex );
+
+		int transparentIndex = GetTransparentIndex( graphicCtrlEx );
+
+		disposalMethodList.Add( GetDisposalMethod( graphicCtrlEx ) );
+
+		Color32 bgColor;
+		List<byte[]> colorTable = GetColorTableAndSetBgColor( gifData , gifData.m_imageBlockList[i] , transparentIndex , out bgColor );
+
+		await Task.Delay( 1 );
+
+		bool filledTexture;
+		Texture2D texture = CreateTexture2D( gifData , imgIndex , disposalMethodList , bgColor , filterMode , wrapMode , out filledTexture );
+
+		await Task.Delay( 1 );
+
+		// Set pixel data
+		int dataIndex = 0;
+		// Reverse set pixels. because GIF data starts from the top left.
+		for( int y = texture.height - 1 ; y>=0 ; y-- )
+		{
+			SetTexturePixelRow( texture , y , gifData.m_imageBlockList[i] , decodedData , ref dataIndex , colorTable , bgColor , transparentIndex , filledTexture );
+		}
+		texture.Apply();
+
+		await Task.Delay( 1 );
+
+		float delaySec = GetDelaySec( graphicCtrlEx );
+
+
+		imgIndex++;
+
+		return texture;
 	}
 
 	#region Call from DecodeTexture methods
@@ -136,11 +190,9 @@ public static partial class UniGif
 	/// </summary>
 	static GraphicControlExtension? GetGraphicCtrlExt ( GifData gifData , int imgBlockIndex )
 	{
-		if( gifData.m_graphicCtrlExList!=null && gifData.m_graphicCtrlExList.Count>imgBlockIndex )
-		{
-			return gifData.m_graphicCtrlExList[imgBlockIndex];
-		}
-		return null;
+		return ( gifData.m_graphicCtrlExList!=null && gifData.m_graphicCtrlExList.Count>imgBlockIndex )
+			? gifData.m_graphicCtrlExList[imgBlockIndex] as GraphicControlExtension?
+			: null;
 	}
 
 	/// <summary>
@@ -148,12 +200,9 @@ public static partial class UniGif
 	/// </summary>
 	static int GetTransparentIndex ( GraphicControlExtension? graphicCtrlEx )
 	{
-		int transparentIndex = -1;
-		if( graphicCtrlEx!=null && graphicCtrlEx.Value.m_transparentColorFlag )
-		{
-			transparentIndex = graphicCtrlEx.Value.m_transparentColorIndex;
-		}
-		return transparentIndex;
+		return graphicCtrlEx!=null && graphicCtrlEx.Value.m_transparentColorFlag
+			? graphicCtrlEx.Value.m_transparentColorIndex
+			: -1;
 	}
 
 	/// <summary>
@@ -162,11 +211,10 @@ public static partial class UniGif
 	static float GetDelaySec ( GraphicControlExtension? graphicCtrlEx )
 	{
 		// Get delay sec from GraphicControlExtension
-		float delaySec = graphicCtrlEx!=null ? graphicCtrlEx.Value.m_delayTime / 100f : (1f / 60f);
-		if( delaySec <= 0f )
-		{
-			delaySec = 0.1f;
-		}
+		float delaySec = graphicCtrlEx!=null
+			? graphicCtrlEx.Value.m_delayTime / 100f
+			: 1f/60f;
+		if( delaySec<=0f ) delaySec = 0.1f;
 		return delaySec;
 	}
 
@@ -175,13 +223,25 @@ public static partial class UniGif
 	/// </summary>
 	static ushort GetDisposalMethod ( GraphicControlExtension? graphicCtrlEx )
 	{
-		return graphicCtrlEx!=null ? graphicCtrlEx.Value.m_disposalMethod : (ushort)2;
+		return graphicCtrlEx!=null
+			? graphicCtrlEx.Value.m_disposalMethod
+			: (ushort)2;
 	}
 
 	/// <summary>
 	/// Create Texture2D object and initial settings
 	/// </summary>
-	static Texture2D CreateTexture2D ( GifData gifData , List<GifTexture> gifTexList , int imgIndex , List<ushort> disposalMethodList , Color32 bgColor , FilterMode filterMode , TextureWrapMode wrapMode , out bool filledTexture )
+	static Texture2D CreateTexture2D
+	(
+		GifData gifData ,
+		List<GifTexture> gifTexList ,
+		int imgIndex ,
+		List<ushort> disposalMethodList ,
+		Color32 bgColor ,
+		FilterMode filterMode ,
+		TextureWrapMode wrapMode ,
+		out bool filledTexture
+	)
 	{
 		filledTexture = false;
 
@@ -217,7 +277,7 @@ public static partial class UniGif
 		else if( disposalMethod==3 )
 		{
 			// 3 (Restore to previous)
-			for( int i = imgIndex - 1 ; i >= 0 ; i-- )
+			for( int i = imgIndex-1 ; i>=0 ; i-- )
 			{
 				if( disposalMethodList[i]==0 || disposalMethodList[i]==1 )
 				{
@@ -227,13 +287,78 @@ public static partial class UniGif
 			}
 		}
 
-		if( useBeforeIndex >= 0 )
+		if( useBeforeIndex>=0 )
 		{
 			filledTexture = true;
 			Color32[] pix = gifTexList[useBeforeIndex].m_texture2d.GetPixels32();
 			tex.SetPixels32( pix );
 			tex.Apply();
 		}
+
+		return tex;
+	}
+	static Texture2D CreateTexture2D
+	(
+		GifData gifData ,
+		int imgIndex ,
+		List<ushort> disposalMethodList ,
+		Color32 bgColor ,
+		FilterMode filterMode ,
+		TextureWrapMode wrapMode ,
+		out bool filledTexture
+	)
+	{
+		filledTexture = false;
+
+		// Create texture
+		Texture2D tex = new Texture2D( gifData.m_logicalScreenWidth , gifData.m_logicalScreenHeight , TextureFormat.ARGB32 , false );
+		tex.filterMode = filterMode;
+		tex.wrapMode = wrapMode;
+
+		// Check dispose
+		ushort disposalMethod = imgIndex>0 ? disposalMethodList[imgIndex - 1] : (ushort)2;
+		int useBeforeIndex = -1;
+		if( disposalMethod==0 )
+		{
+			// 0 (No disposal specified)
+		}
+		else if( disposalMethod==1 )
+		{
+			// 1 (Do not dispose)
+			useBeforeIndex = imgIndex - 1;
+		}
+		else if( disposalMethod==2 )
+		{
+			// 2 (Restore to background color)
+			filledTexture = true;
+			Color32[] pix = new Color32[tex.width * tex.height];
+			for( int i = 0 ; i<pix.Length ; i++ )
+			{
+				pix[i] = bgColor;
+			}
+			tex.SetPixels32( pix );
+			tex.Apply();
+		}
+		else if( disposalMethod==3 )
+		{
+			// 3 (Restore to previous)
+			for( int i = imgIndex-1 ; i>=0 ; i-- )
+			{
+				if( disposalMethodList[i]==0 || disposalMethodList[i]==1 )
+				{
+					useBeforeIndex = i;
+					break;
+				}
+			}
+		}
+
+		// if( useBeforeIndex>=0 )
+		// {
+		// 	filledTexture = true;
+		// 	Color32[] pix = gifTexList[useBeforeIndex].m_texture2d.GetPixels32();
+		// 	tex.SetPixels32( pix );
+		// 	tex.Apply();
+		// }
 
 		return tex;
 	}
@@ -253,9 +378,9 @@ public static partial class UniGif
 
 			// Out of image blocks
 			if( row<imgBlock.m_imageTopPosition ||
-				row >= imgBlock.m_imageTopPosition + imgBlock.m_imageHeight ||
+				row>=imgBlock.m_imageTopPosition + imgBlock.m_imageHeight ||
 				line<imgBlock.m_imageLeftPosition ||
-				line >= imgBlock.m_imageLeftPosition + imgBlock.m_imageWidth )
+				line>=imgBlock.m_imageLeftPosition + imgBlock.m_imageWidth )
 			{
 				// Get pixel color from bg color
 				if( filledTexture==false )
@@ -266,7 +391,7 @@ public static partial class UniGif
 			}
 
 			// Out of decoded data
-			if( dataIndex >= decodedData.Length )
+			if( dataIndex>=decodedData.Length )
 			{
 				if( filledTexture==false )
 				{
@@ -283,7 +408,7 @@ public static partial class UniGif
 			// Get pixel color from color table
 			{
 				byte colorIndex = decodedData[dataIndex];
-				if( colorTable==null || colorTable.Count <= colorIndex )
+				if( colorTable==null || colorTable.Count<=colorIndex )
 				{
 					if( filledTexture==false )
 					{
@@ -303,7 +428,7 @@ public static partial class UniGif
 				byte[] rgb = colorTable[colorIndex];
 
 				// Set alpha
-				byte alpha = transparentIndex >= 0 && transparentIndex==colorIndex ? (byte)0 : (byte)255;
+				byte alpha = transparentIndex>=0 && transparentIndex==colorIndex ? (byte)0 : (byte)255;
 
 				if( filledTexture==false || alpha!=0 )
 				{
@@ -383,7 +508,7 @@ public static partial class UniGif
 				// Output from dictionary
 				entry = dic[key];
 			}
-			else if( key >= dic.Count )
+			else if( key>=dic.Count )
 			{
 				if( prevEntry!=null )
 				{
@@ -416,7 +541,7 @@ public static partial class UniGif
 				}
 			}
 
-			if( outputAddIndex >= needDataSize )
+			if( outputAddIndex>=needDataSize )
 			{
 				// Exit
 				break;
@@ -432,43 +557,43 @@ public static partial class UniGif
 
 			bitDataIndex += lzwCodeSize;
 
-			if( lzwCodeSize==3 && dic.Count >= 8 )
+			if( lzwCodeSize==3 && dic.Count>=8 )
 			{
 				lzwCodeSize = 4;
 			}
-			else if( lzwCodeSize==4 && dic.Count >= 16 )
+			else if( lzwCodeSize==4 && dic.Count>=16 )
 			{
 				lzwCodeSize = 5;
 			}
-			else if( lzwCodeSize==5 && dic.Count >= 32 )
+			else if( lzwCodeSize==5 && dic.Count>=32 )
 			{
 				lzwCodeSize = 6;
 			}
-			else if( lzwCodeSize==6 && dic.Count >= 64 )
+			else if( lzwCodeSize==6 && dic.Count>=64 )
 			{
 				lzwCodeSize = 7;
 			}
-			else if( lzwCodeSize==7 && dic.Count >= 128 )
+			else if( lzwCodeSize==7 && dic.Count>=128 )
 			{
 				lzwCodeSize = 8;
 			}
-			else if( lzwCodeSize==8 && dic.Count >= 256 )
+			else if( lzwCodeSize==8 && dic.Count>=256 )
 			{
 				lzwCodeSize = 9;
 			}
-			else if( lzwCodeSize==9 && dic.Count >= 512 )
+			else if( lzwCodeSize==9 && dic.Count>=512 )
 			{
 				lzwCodeSize = 10;
 			}
-			else if( lzwCodeSize==10 && dic.Count >= 1024 )
+			else if( lzwCodeSize==10 && dic.Count>=1024 )
 			{
 				lzwCodeSize = 11;
 			}
-			else if( lzwCodeSize==11 && dic.Count >= 2048 )
+			else if( lzwCodeSize==11 && dic.Count>=2048 )
 			{
 				lzwCodeSize = 12;
 			}
-			else if( lzwCodeSize==12 && dic.Count >= 4096 )
+			else if( lzwCodeSize==12 && dic.Count>=4096 )
 			{
 				int nextKey = bitData.GetNumeral( bitDataIndex , lzwCodeSize );
 				if( nextKey!=clearCode )
