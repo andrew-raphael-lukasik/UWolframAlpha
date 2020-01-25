@@ -74,8 +74,8 @@ namespace UWolframAlpha
 				return www;
 			}
 
-			/// <summary> Creates Texture2D from given URI </summary>
-			public static async Task<Texture2D> LoadTexture ( string url )
+			/// <summary> Creates Texture2D from given URI of a JPG or PNG file </summary>
+			public static async Task<Texture2D> DownloadTextureJpgPng ( string url )
 			{
 				Assert.IsNotNull( url , "url is null" );
 				Assert.IsTrue( url.Length!=0 , "url is of Length 0" );
@@ -95,6 +95,44 @@ namespace UWolframAlpha
 						return null;
 					}
 					else return DownloadHandlerTexture.GetContent( www );
+				}
+			}
+
+			/// <summary> Creates Texture2D from given URI of a GIF file </summary>
+			public static async Task<Texture2D> DownloadTextureGif ( string url )
+			{
+				Assert.IsNotNull( url , "url is null" );
+				Assert.IsTrue( url.Length!=0 , "url is of Length 0" );
+
+				using( var www = UnityWebRequest.Get(url) )
+				{
+					var asyncOp = www.SendWebRequest();
+					while( asyncOp.isDone==false )
+						await Task.Delay( 100 );
+
+					if( www.isNetworkError || www.isHttpError )
+					{
+						#if DEBUG
+						Debug.LogError($"{www.error} at URL:{www.url}");
+						#endif
+
+						return null;
+					}
+					else
+					{
+						var handle = www.downloadHandler;
+						byte[] bytes = handle.data;
+
+						//var texture = new Texture2D();
+
+						var frames = await UniGif.GetTextureListCoroutine( bytes );
+
+						return frames[0].m_texture2d;
+
+						//var r = DownloadHandlerBuffer.GetContent( www );
+
+						//return null;
+					}
 				}
 			}
 

@@ -292,8 +292,9 @@ namespace UWolframAlpha.Data
 				if( this==null ) return;
 			}
 
-			//image = await UWolframAlpha.Internal.LoadTexture("https://upload.wikimedia.org/wikipedia/commons/0/0e/Tree_example_VIS.jpg");
-			image = await UWolframAlpha.Internal.LoadTexture( _url );
+			//image = await UWolframAlpha.Internal.DownloadTextureJpgPng("https://upload.wikimedia.org/wikipedia/commons/0/0e/Tree_example_VIS.jpg");
+			//image = await UWolframAlpha.Internal.DownloadTextureGif("http://people.ucalgary.ca/~phillips/graphics/tips/opaque.gif");
+			image = await UWolframAlpha.Internal.DownloadTextureGif( _url );
 
 			MarkDirtyRepaint();
 		}
