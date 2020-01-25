@@ -24,6 +24,7 @@ namespace UWolframAlpha.Editor
 				ROOT = new VisualElement();
 				{
 					var style = ROOT.style;
+					style.backgroundColor = Color.white;
 					style.flexGrow = 1f;
 				}
 				rootVisualElement.Add( ROOT );
