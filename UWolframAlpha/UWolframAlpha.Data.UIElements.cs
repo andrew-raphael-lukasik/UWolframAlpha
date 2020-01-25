@@ -63,8 +63,17 @@ namespace UWolframAlpha.Data
 				var IMAGESOURCE = _Factory.Text( "Source:" , imagesource );
 				ROOT.Add( IMAGESOURCE );
 
-				var PLAINTEXT = _Factory.TextGrid( plaintext );
-				ROOT.Add( PLAINTEXT );
+				if( plaintext!=null && plaintext.Length!=0 )
+				{
+					var FOLDOUT = new Foldout();
+					FOLDOUT.text = "Plain Text";
+					FOLDOUT.value = false;
+					{
+						var PLAINTEXT = _Factory.TextGrid( plaintext );
+						FOLDOUT.Add( PLAINTEXT );
+					}
+					ROOT.Add( FOLDOUT );
+				}
 			}
 			return ROOT;
 		}
