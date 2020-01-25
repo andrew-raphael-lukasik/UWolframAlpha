@@ -250,7 +250,6 @@ namespace UWolframAlpha.Data
 						for( int c=0 ; c<numRawCells ; c++ )
 						{
 							string cell = rawCells[c].TrimStart(' ').TrimEnd(' ');
-							// cell = cell.Length!=0 ? cell : "\"\"";
 							if( c!=0 ) row.Append(',');
 							row.Append( cell );
 						}
