@@ -17,4 +17,6 @@ string response_raw = await UWolframAlpha.QueryXML( query , appid );
 ```
 You can obtain your own free appid here: http://developer.wolframalpha.com/portal/myapps/index.html
 
+Note: UWolframAlpha uses it's own internal appid when none is provided. Limit of 2000 free requests/month is shared between all such users. Hence it's advised to use your own.
+
 ![(preview image)](https://i.imgur.com/dlUKB4p.jpg)
