@@ -5,10 +5,7 @@ This software is released under the MIT License.
 http://opensource.org/licenses/mit-license.php
 */
 
-using System;
 using System.Threading.Tasks;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public static partial class UniGif
@@ -22,7 +19,7 @@ public static partial class UniGif
 	/// <param name="wrapMode">Textures wrap mode</param>
 	/// <param name="debugLog">Debug Log Flag</param>
 	/// <returns>IEnumerator</returns>
-	public async static Task<List<GifTexture>> GetTextureListCoroutine
+	public async static Task<GifTexture[]> GetTexturesAsync
 	(
 		byte[] bytes ,
 		FilterMode filterMode = FilterMode.Bilinear ,
@@ -35,16 +32,16 @@ public static partial class UniGif
 		if( !SetGifData( bytes , ref gifData , debugLog ) )
 		{
 			Debug.LogError( "GIF file data set error." );
-			await Task.Delay( 1 );//yield break;
+			await Task.Delay( 1 );
 		}
 
 		// Decode to textures from GIF data
-		var gifTexList = await DecodeTextureCoroutine( gifData , filterMode , wrapMode );
+		var gifTexList = await DecodeTextureAsync( gifData , filterMode , wrapMode );
 
-		if( gifTexList == null || gifTexList.Count <= 0 )
+		if( gifTexList==null || gifTexList.Length==0 )
 		{
 			Debug.LogError( "GIF texture decode error." );
-			await Task.Delay( 1 );//yield break;
+			await Task.Delay( 1 );
 		}
 
 		int loopCount = gifData.m_appEx.loopCount;

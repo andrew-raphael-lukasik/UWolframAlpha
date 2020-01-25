@@ -125,7 +125,7 @@ namespace UWolframAlpha
 
 						//var texture = new Texture2D();
 
-						var frames = await UniGif.GetTextureListCoroutine( bytes );
+						var frames = await UniGif.GetTexturesAsync( bytes );
 
 						return frames[0].m_texture2d;
 
