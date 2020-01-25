@@ -65,14 +65,23 @@ namespace UWolframAlpha.Data
 
 				if( plaintext!=null && plaintext.Length!=0 )
 				{
-					var FOLDOUT = new Foldout();
-					FOLDOUT.text = "Plain Text";
-					FOLDOUT.value = false;
+					var FOLDOUT_TEXT = new Foldout();
+					FOLDOUT_TEXT.text = "plain text";
+					FOLDOUT_TEXT.value = false;
 					{
 						var PLAINTEXT = _Factory.TextGrid( plaintext );
-						FOLDOUT.Add( PLAINTEXT );
+						FOLDOUT_TEXT.Add( PLAINTEXT );
 					}
-					ROOT.Add( FOLDOUT );
+					ROOT.Add( FOLDOUT_TEXT );
+
+					var FOLDOUT_CSV = new Foldout();
+					FOLDOUT_CSV.text = "csv";
+					FOLDOUT_CSV.value = false;
+					{
+						var CSV = _Factory.ToCsvField( plaintext );
+						FOLDOUT_CSV.Add( CSV );
+					}
+					ROOT.Add( FOLDOUT_CSV );
 				}
 			}
 			return ROOT;
@@ -221,6 +230,38 @@ namespace UWolframAlpha.Data
 				}
 
 				return ROOT;
+			}
+			else return null;
+		}
+		public static TextField ToCsvField ( string text )
+		{
+			if( text!=null && text.Length!=0 )
+			{
+				var csv = new System.Text.StringBuilder();
+				string[] rawRows = text.Split('\n');
+				int numRawRows = rawRows.Length;
+				for( int r=0 ; r<numRawRows ; r++ )
+				{
+					string raw_row = rawRows[r];
+					var row = new System.Text.StringBuilder();
+					{
+						string[] rawCells = raw_row.Split('|');
+						int numRawCells = rawCells.Length;
+						for( int c=0 ; c<numRawCells ; c++ )
+						{
+							string cell = rawCells[c].TrimStart(' ').TrimEnd(' ');
+							// cell = cell.Length!=0 ? cell : "\"\"";
+							if( c!=0 ) row.Append(',');
+							row.Append( cell );
+						}
+					}
+					csv.AppendLine( row.ToString() );
+				}
+
+				var CSV = new TextField();
+				CSV.value = csv.ToString();
+				CSV.isReadOnly = true;
+				return CSV;
 			}
 			else return null;
 		}
