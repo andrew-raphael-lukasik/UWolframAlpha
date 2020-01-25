@@ -44,7 +44,7 @@ namespace UWolframAlpha.Editor
 					}
 					{
 						INPUT.isDelayed = true;
-						INPUT.value = EditorPrefs.GetString( k_editorprefskey_input , "Answer to the Ultimate Question of Life, the Universe, and Everything" );
+						INPUT.value = EditorPrefs.GetString( k_editorprefskey_input , "gold vs carbon vs iridium" );
 						INPUT.RegisterValueChangedCallback( (e) => {
 							EditorPrefs.SetString( k_editorprefskey_input , e.newValue );
 							OnButtonDown();
