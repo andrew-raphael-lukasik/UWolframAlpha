@@ -7,13 +7,13 @@ or call
 
 ```c#
 string query = "phosphorus";
-var response = UWolframAlpha.Query( query );
+var response = await UWolframAlpha.Query( query );
 ```
 ```c#
 string query = "phosphorus";
 string appid = "your own appid goes here";
-var response = UWolframAlpha.Query( query , appid );
-string response_raw = UWolframAlpha.QueryXML( query , appid );
+var response = await UWolframAlpha.Query( query , appid );
+string response_raw = await UWolframAlpha.QueryXML( query , appid );
 ```
 
 ![(preview image)](https://i.imgur.com/mhBViEQ.jpg)
