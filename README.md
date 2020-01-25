@@ -16,7 +16,4 @@ var response = UWolframAlpha.Query( query , appid );
 string response_raw = UWolframAlpha.QueryXML( query , appid );
 ```
 
-TODO:
-- more deserialized data types (images etc)
-
-![(preview image)](https://i.imgur.com/r00CBxK.jpg)
+![(preview image)](https://i.imgur.com/PTeI50H.jpg)
