@@ -16,4 +16,4 @@ var response = UWolframAlpha.Query( query , appid );
 string response_raw = UWolframAlpha.QueryXML( query , appid );
 ```
 
-![(preview image)](https://i.imgur.com/1cVYpT8.jpg)
+![(preview image)](https://i.imgur.com/mhBViEQ.jpg)
