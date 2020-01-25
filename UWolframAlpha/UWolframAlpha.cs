@@ -36,6 +36,27 @@ namespace UWolframAlpha
         }
 
 		/// <summary> WolframAlpha query. </summary>
+		/// <returns> JSON string </returns>
+        public static async Task<string> QueryJSON ( string query , string appid = k_default_appid )
+        {
+			appid = appid!=null && appid.Length!=0 ? appid : k_default_appid;
+            string uri = $"http://api.wolframalpha.com/v2/query?input={query}&appid={appid}&output=json";
+			
+			#if DEBUG
+			Debug.Log($"\tWebRequest: {uri.Replace(appid,"<appid>")}");
+			#endif
+            
+            var webRequest = await Internal.WebRequest( uri );
+			string response = webRequest.downloadHandler.text;
+			
+			#if DEBUG
+			Debug.Log($"\t\tResponse: {response}");
+			#endif
+
+			return response;
+        }
+
+		/// <summary> WolframAlpha query. </summary>
 		/// <returns> Deserialized data. </returns>
         public static async Task<QueryResult> Query ( string query , string appid = k_default_appid )
         {
