@@ -1,7 +1,7 @@
 # UWolframAlpha
 WolframAlpha queries now accessible from any Unity Editor/Application nerby!
 
-go to **Tools>WolframAlpha**
+go to **Tools>UWolframAlpha**
 
 or call
 
