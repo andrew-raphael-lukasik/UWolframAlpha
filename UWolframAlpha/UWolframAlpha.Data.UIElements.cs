@@ -301,7 +301,12 @@ namespace UWolframAlpha.Data
 		public static void SetBorders ( IStyle style , Color color , int width )
 		{
 			style.borderTopWidth = style.borderBottomWidth = style.borderLeftWidth = style.borderRightWidth = width;
+
+			#if UNITY_2019_3_OR_NEWER
 			style.borderTopColor = style.borderBottomColor = style.borderLeftColor = style.borderRightColor = color;
+			#else
+			style.borderColor = color;
+			#endif
 		}
 	}
 
