@@ -116,8 +116,8 @@ namespace UWolframAlpha.Editor
 			string appid = EditorPrefs.GetString( k_editorprefskey_appid , string.Empty );
 			var queryResult =
 				appid.Length!=0
-				? await UWolframAlpha.Query( INPUT.value , appid )
-				: await UWolframAlpha.Query( INPUT.value );
+				? await Query.Data( INPUT.value , appid )
+				: await Query.Data( INPUT.value );
 			
 			OUTPUT.Clear();
 			OUTPUT.SetEnabled( true );

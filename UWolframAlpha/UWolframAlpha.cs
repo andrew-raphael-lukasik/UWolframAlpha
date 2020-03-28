@@ -9,14 +9,14 @@ using QueryResult = UWolframAlpha.Data.QueryResult;
 
 namespace UWolframAlpha
 {
-    public static class UWolframAlpha
+    public static class Query
     {
 
 		const string k_default_appid = "TE2UAQ-R25Q5U8VTA";
 
         /// <summary> WolframAlpha query. </summary>
 		/// <returns> XML string </returns>
-        public static async Task<string> QueryXML ( string query , string appid = k_default_appid )
+        public static async Task<string> XML ( string query , string appid = k_default_appid )
         {
 			appid = appid!=null && appid.Length!=0 ? appid : k_default_appid;
             string uri = $"http://api.wolframalpha.com/v2/query?input={query}&appid={appid}";
@@ -37,7 +37,7 @@ namespace UWolframAlpha
 
 		/// <summary> WolframAlpha query. </summary>
 		/// <returns> JSON string </returns>
-        public static async Task<string> QueryJSON ( string query , string appid = k_default_appid )
+        public static async Task<string> JSON ( string query , string appid = k_default_appid )
         {
 			appid = appid!=null && appid.Length!=0 ? appid : k_default_appid;
             string uri = $"http://api.wolframalpha.com/v2/query?input={query}&appid={appid}&output=json";
@@ -58,9 +58,9 @@ namespace UWolframAlpha
 
 		/// <summary> WolframAlpha query. </summary>
 		/// <returns> Deserialized data. </returns>
-        public static async Task<QueryResult> Query ( string query , string appid = k_default_appid )
+        public static async Task<QueryResult> Data ( string query , string appid = k_default_appid )
         {
-			string xml = await QueryXML( query , appid );
+			string xml = await XML( query , appid );
 			return await DeserializeXML( xml );
         }
 
