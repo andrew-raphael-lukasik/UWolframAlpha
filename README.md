@@ -7,13 +7,13 @@ or call
 
 ```c#
 string query = "phosphorus";
-var response = await UWolframAlpha.Query( query );
+var response = await UWolframAlpha.Query.Data( query );
 ```
 ```c#
 string query = "phosphorus";
 string appid = "your own appid goes here";
-var response = await UWolframAlpha.Query( query , appid );
-string response_raw = await UWolframAlpha.QueryXML( query , appid );
+var response = await UWolframAlpha.Query.Data( query , appid );
+string response_raw = await UWolframAlpha.Query.XML( query , appid );
 ```
 
 **NOTE**: UWolframAlpha uses it's own internal appid when none is provided. Limit of 2000 free requests/month is shared between all such users. Hence it's advised to use your own appid.
