@@ -38,7 +38,7 @@ namespace UWolframAlpha.Editor
 				}
 				{
 					INPUT.isDelayed = true;
-					INPUT.value = EditorPrefs.GetString( k_editorprefskey_input , "gold vs carbon vs iridium" );
+					INPUT.SetValueWithoutNotify( EditorPrefs.GetString( k_editorprefskey_input , "gold vs carbon vs iridium" ) );
 					INPUT.RegisterValueChangedCallback( (e) => {
 						EditorPrefs.SetString( k_editorprefskey_input , e.newValue );
 						OnButtonDown();
@@ -90,7 +90,7 @@ namespace UWolframAlpha.Editor
 					var LABEL = new Label("appid:");
 					APPID_BAR.Add( LABEL );
 
-					APPID_FIELD.value = EditorPrefs.GetString( k_editorprefskey_appid , string.Empty );
+					APPID_FIELD.SetValueWithoutNotify( EditorPrefs.GetString( k_editorprefskey_appid , string.Empty ) );
 					APPID_FIELD.RegisterValueChangedCallback( (e) => EditorPrefs.SetString( k_editorprefskey_appid , e.newValue ) );
 					APPID_FIELD.isDelayed = true;
 
