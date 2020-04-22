@@ -21,3 +21,9 @@ string response_raw = await UWolframAlpha.Query.XML( query , appid );
 You can obtain **free appid** here: http://developer.wolframalpha.com/portal/myapps/index.html
 
 ![(preview image)](https://i.imgur.com/dlUKB4p.jpg)
+
+# Requirements:
+- Unity 2019.x
+- com.unity.modules.uielements
+- com.unity.ui.runtime (for runtime uielements window)
+- com.unity.modules.ui, com.unity.textmeshpro (for runtime ui samples)
