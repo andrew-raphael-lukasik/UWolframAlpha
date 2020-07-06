@@ -1,0 +1,23 @@
+{
+    "name": "com.andrewraphaellukasik.uwolframalpha",
+    "displayName": "UWolframAlpha",
+    "version": "1.0.0",
+    "unity": "2019.1",
+    "description": "WolframAlpha in Unity",
+	"dependencies": {
+        "com.unity.mathematics": "1.0.0"
+    },
+	"samples": [
+    {
+      "displayName": "Implementation examples",
+      "description": "Implementation examples showing how to build your own WolframAlpha window.",
+      "path": "Examples"
+    }
+  ],
+	"author": {
+		"name": "Andrzej Rafał Łukasik",
+		"email": "andrew.r.lukasik@gmail.com",
+		"url": "https://github.com/andrew-raphael-lukasik"
+	},
+	"type": "productivity tool"
+}
