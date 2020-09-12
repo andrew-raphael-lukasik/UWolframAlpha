@@ -5,6 +5,7 @@
     "unity": "2019.1",
     "description": "WolframAlpha in Unity",
   "dependencies": {
+    "com.unity.modules.uielements": "1.0.0",
     "com.unity.ui": "1.0.0-preview.8",
     "com.unity.textmeshpro": "2.0.0"
   },
