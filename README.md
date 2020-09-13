@@ -22,13 +22,7 @@ You can obtain **free appid** here: http://developer.wolframalpha.com/portal/mya
 
 ![(preview image)](https://i.imgur.com/dlUKB4p.jpg)
 
-# Requirements:
-- Unity 2019.x
-- com.unity.modules.uielements
-- com.unity.ui.runtime (for runtime uielements window)
-- com.unity.modules.ui, com.unity.textmeshpro (for runtime ui samples)
-
-# Instalation
+# Instalation Unity 2019.x
 Add this line in `manifest.json` / `dependencies`:
 ```
 "dependencies": {
