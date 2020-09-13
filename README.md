@@ -26,11 +26,11 @@ You can obtain **free appid** here: http://developer.wolframalpha.com/portal/mya
 Add this line in `manifest.json` / `dependencies`:
 ```
 "dependencies": {
-    "com.andrewraphaellukasik.uwolframalpha": "https://github.com/andrew-raphael-lukasik/UWolframAlpha.git#upm",
+    "com.andrewraphaellukasik.uwolframalpha": "https://github.com/andrew-raphael-lukasik/UWolframAlpha.git#upm_2019",
 }
 ```
 
 Or via `Package Manager` / `Add package from git URL`:
 ```
-https://github.com/andrew-raphael-lukasik/UWolframAlpha.git#upm
+https://github.com/andrew-raphael-lukasik/UWolframAlpha.git#upm_2019
 ```
