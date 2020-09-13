@@ -22,15 +22,28 @@ You can obtain **free appid** here: http://developer.wolframalpha.com/portal/mya
 
 ![(preview image)](https://i.imgur.com/dlUKB4p.jpg)
 
-# Instalation Unity 2019.x
+# Instalation Unity 2020.x
 Add this line in `manifest.json` / `dependencies`:
 ```
 "dependencies": {
-    "com.andrewraphaellukasik.uwolframalpha": "https://github.com/andrew-raphael-lukasik/UWolframAlpha.git#upm",
+    "com.andrewraphaellukasik.uwolframalpha": "https://github.com/andrew-raphael-lukasik/UWolframAlpha.git#upm_2020",
 }
 ```
 
 Or via `Package Manager` / `Add package from git URL`:
 ```
-https://github.com/andrew-raphael-lukasik/UWolframAlpha.git#upm
+https://github.com/andrew-raphael-lukasik/UWolframAlpha.git#upm_2020
+```
+
+# Instalation Unity 2019.x
+Add this line in `manifest.json` / `dependencies`:
+```
+"dependencies": {
+    "com.andrewraphaellukasik.uwolframalpha": "https://github.com/andrew-raphael-lukasik/UWolframAlpha.git#upm_2019",
+}
+```
+
+Or via `Package Manager` / `Add package from git URL`:
+```
+https://github.com/andrew-raphael-lukasik/UWolframAlpha.git#upm_2019
 ```
