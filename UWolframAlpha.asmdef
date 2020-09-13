@@ -1,8 +1,7 @@
 {
     "name": "UWolframAlpha",
     "references": [
-        "GUID:fd7f2ed1f052e3d45afdb78e9c72d55e",
-        "GUID:6055be8ebefd69e48b49212b09b47b2f"
+        "GUID:20f56f721c9feeb4bb67916c3c3e62ff"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],

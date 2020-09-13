@@ -1,13 +1,12 @@
 {
-    "name": "com.andrewraphaellukasik.uwolframalpha",
-    "displayName": "UWolframAlpha",
-    "version": "1.0.0",
-    "unity": "2019.1",
-    "description": "WolframAlpha in Unity",
+  "name": "com.andrewraphaellukasik.uwolframalpha",
+  "displayName": "UWolframAlpha",
+  "version": "1.2020.0",
+  "unity": "2020.1",
+  "description": "WolframAlpha in Unity",
   "dependencies": {
     "com.unity.modules.uielements": "1.0.0",
-    "com.unity.ui.runtime": "0.0.4-preview",
-    "com.unity.textmeshpro": "2.0.0"
+    "com.unity.ui": "1.0.0-preview.3"
   },
   "samples": [
     {
@@ -17,9 +16,10 @@
     }
   ],
   "author": {
-    "name": "Andrzej Rafał Łukasik",
+    "name": "Andrzej Rafa\u0142 \u0141ukasik",
     "email": "andrew.r.lukasik@gmail.com",
     "url": "https://github.com/andrew-raphael-lukasik"
   },
-  "type": "productivity tool"
+  "type": "tool",
+  "hideInEditor": true
 }
