@@ -6,7 +6,7 @@
   "description": "WolframAlpha in Unity",
   "dependencies": {
     "com.unity.modules.uielements": "1.0.0",
-    "com.unity.ui": "1.0.0-preview.3"
+    "com.unity.ui": "1.0.0-preview.8"
   },
   "samples": [
     {
