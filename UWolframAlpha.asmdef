@@ -1,7 +1,8 @@
 {
     "name": "UWolframAlpha",
     "references": [
-        "GUID:20f56f721c9feeb4bb67916c3c3e62ff"
+        "UnityEngine.UIElementsModule",
+        "UnityEngine.UIElementsGameObjectsModule"
     ],
     "includePlatforms": [],
     "excludePlatforms": [],
