@@ -22,7 +22,7 @@ You can obtain **free appid** here: http://developer.wolframalpha.com/portal/mya
 
 ![(preview image)](https://i.imgur.com/dlUKB4p.jpg)
 
-# Instalation Unity 2019.x
+# Installation Unity 2019.x
 Add this line in `manifest.json` / `dependencies`:
 ```
 "dependencies": {
