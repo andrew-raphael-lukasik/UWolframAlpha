@@ -1,5 +1,5 @@
 # UWolframAlpha
-WolframAlpha queries now accessible from any Unity Editor/Application nerby!
+WolframAlpha queries now accessible from any Unity Editor/Application nearby!
 
 go to **Tools>UWolframAlpha**
 
