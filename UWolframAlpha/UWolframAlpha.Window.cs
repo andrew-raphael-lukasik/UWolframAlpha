@@ -1,4 +1,3 @@
-using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -6,8 +5,8 @@ namespace UWolframAlpha.Window
 {
 	public class Instance
 	{
-		const string k_editorprefskey_appid = "UWolframAlphaWindow.appid";
-		const string k_editorprefskey_input = "UWolframAlphaWindow.input_value";
+		const string k_playerprefskey_appid = "UWolframAlphaWindow.appid";
+		const string k_playerprefskey_input = "UWolframAlphaWindow.input_value";
 		Color _color1 = new Color{ r=0.6f , g=0.6f , b=0.6f , a=1 };
 
 		VisualElement OUTPUT;
@@ -38,9 +37,9 @@ namespace UWolframAlpha.Window
 				}
 				{
 					INPUT.isDelayed = true;
-					INPUT.SetValueWithoutNotify( EditorPrefs.GetString( k_editorprefskey_input , "gold vs carbon vs iridium" ) );
+					INPUT.SetValueWithoutNotify( PlayerPrefs.GetString( k_playerprefskey_input , "gold vs carbon vs iridium" ) );
 					INPUT.RegisterValueChangedCallback( (e) => {
-						EditorPrefs.SetString( k_editorprefskey_input , e.newValue );
+						PlayerPrefs.SetString( k_playerprefskey_input , e.newValue );
 						OnButtonDown();
 					});
 				}
@@ -90,8 +89,8 @@ namespace UWolframAlpha.Window
 					var LABEL = new Label("appid:");
 					APPID_BAR.Add( LABEL );
 
-					APPID_FIELD.SetValueWithoutNotify( EditorPrefs.GetString( k_editorprefskey_appid , string.Empty ) );
-					APPID_FIELD.RegisterValueChangedCallback( (e) => EditorPrefs.SetString( k_editorprefskey_appid , e.newValue ) );
+					APPID_FIELD.SetValueWithoutNotify( PlayerPrefs.GetString( k_playerprefskey_appid , string.Empty ) );
+					APPID_FIELD.RegisterValueChangedCallback( (e) => PlayerPrefs.SetString( k_playerprefskey_appid , e.newValue ) );
 					APPID_FIELD.isDelayed = true;
 
 					LABEL.SetEnabled( false );
@@ -113,7 +112,7 @@ namespace UWolframAlpha.Window
 			Debug.Log($"UWolframAlpha.Query( \"{INPUT.value}\" )");
 			OUTPUT.SetEnabled( false );
 
-			string appid = EditorPrefs.GetString( k_editorprefskey_appid , string.Empty );
+			string appid = PlayerPrefs.GetString( k_playerprefskey_appid , string.Empty );
 			var queryResult =
 				appid.Length!=0
 				? await Query.Data( INPUT.value , appid )
