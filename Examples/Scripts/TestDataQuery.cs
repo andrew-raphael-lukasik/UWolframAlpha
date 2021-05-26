@@ -30,6 +30,7 @@ namespace UWolframAlpha.Samples
             var response = await UWolframAlpha.Query.Data( text );
 
             // append output view:
+            if( response.pod_array!=null )
             foreach( var pod in response.pod_array )
             {
                 var entry = new GameObject( $"pod {pod.title}" , typeof(RectTransform) , typeof(VerticalLayoutGroup) , typeof(Image) );
@@ -86,6 +87,7 @@ namespace UWolframAlpha.Samples
                     }
                 }
             }
+            else Debug.LogWarning("try different query");
         }
 
         void Dispose ()
