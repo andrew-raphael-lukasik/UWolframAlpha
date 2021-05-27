@@ -5,6 +5,8 @@
   "unity": "2020.1",
   "description": "WolframAlpha in Unity",
   "dependencies": {
+	"com.unity.modules.unitywebrequest": "1.0.0",
+	"com.unity.modules.unitywebrequesttexture": "1.0.0",
     "com.unity.modules.uielements": "1.0.0",
     "com.unity.ui": "1.0.0-preview.14"
   },
