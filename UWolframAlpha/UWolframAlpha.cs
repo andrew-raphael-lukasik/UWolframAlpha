@@ -88,7 +88,7 @@ namespace UWolframAlpha
 						await Task.Delay( System.TimeSpan.FromMilliseconds(100) );
 
 					#if DEBUG
-					if( www.isNetworkError || www.isHttpError )
+					if( www.result==UnityWebRequest.Result.ConnectionError || www.result==UnityWebRequest.Result.ProtocolError )
 						Debug.LogWarning( www.error );
 					#endif
 				}
@@ -107,7 +107,7 @@ namespace UWolframAlpha
 					while( asyncOp.isDone==false )
 						await Task.Delay( 100 );
 
-					if( www.isNetworkError || www.isHttpError )
+					if( www.result==UnityWebRequest.Result.ConnectionError || www.result==UnityWebRequest.Result.ProtocolError )
 					{
 						#if DEBUG
 						Debug.LogError($"{www.error} at URL:{www.url}");
@@ -131,7 +131,7 @@ namespace UWolframAlpha
 					while( asyncOp.isDone==false )
 						await Task.Delay( 100 );
 
-					if( www.isNetworkError || www.isHttpError )
+					if( www.result==UnityWebRequest.Result.ConnectionError || www.result==UnityWebRequest.Result.ProtocolError )
 					{
 						#if DEBUG
 						Debug.LogError($"{www.error} at URL:{www.url}");
