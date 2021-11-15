@@ -34,3 +34,29 @@ Or via `Package Manager` / `Add package from git URL`:
 ```
 https://github.com/andrew-raphael-lukasik/UWolframAlpha.git#upm_2021
 ```
+
+# Installation Unity 2020.x
+Add this line in `manifest.json` / `dependencies`:
+```
+"dependencies": {
+    "com.andrewraphaellukasik.uwolframalpha": "https://github.com/andrew-raphael-lukasik/UWolframAlpha.git#upm_2020",
+}
+```
+
+Or via `Package Manager` / `Add package from git URL`:
+```
+https://github.com/andrew-raphael-lukasik/UWolframAlpha.git#upm_2020
+```
+
+# Installation Unity 2019.x
+Add this line in `manifest.json` / `dependencies`:
+```
+"dependencies": {
+    "com.andrewraphaellukasik.uwolframalpha": "https://github.com/andrew-raphael-lukasik/UWolframAlpha.git#upm_2019",
+}
+```
+
+Or via `Package Manager` / `Add package from git URL`:
+```
+https://github.com/andrew-raphael-lukasik/UWolframAlpha.git#upm_2019
+```
