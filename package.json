@@ -1,14 +1,13 @@
 {
   "name": "com.andrewraphaellukasik.uwolframalpha",
   "displayName": "UWolframAlpha",
-  "version": "2020.0.1",
-  "unity": "2020.1",
+  "version": "2021.0.0",
+  "unity": "2021.1",
   "description": "WolframAlpha in Unity",
   "dependencies": {
 	"com.unity.modules.unitywebrequest": "1.0.0",
 	"com.unity.modules.unitywebrequesttexture": "1.0.0",
-    "com.unity.modules.uielements": "1.0.0",
-    "com.unity.ui": "1.0.0-preview.14"
+	"com.unity.ui": "1.0.0-preview.14"
   },
   "samples": [
     {
